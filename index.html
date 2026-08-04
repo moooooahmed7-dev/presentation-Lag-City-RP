@@ -7,19 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS المدمج --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #14161a; color: #e0e6ed; font-family: 'Cairo', sans-serif; direction: rtl; padding: 20px; font-size: 14px; }
         .form-container { max-width: 800px; margin: 0 auto; }
-        
-        /* تنسيق الهيدر وزر الديسكورد */
         .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .header-titles { display: flex; align-items: center; gap: 15px; }
         .form-header h2 { color: #e03030; margin: 0; }
         .join-discord-btn { background-color: #5865F2; color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 13px; transition: 0.2s; }
         .join-discord-btn:hover { background-color: #4752c4; }
         .logo-placeholder { width: 50px; height: 50px; background-color: #2c3038; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        
         .form-row { margin-bottom: 20px; }
         .form-row.duo { display: flex; gap: 20px; }
         .form-row.duo .form-group { flex: 1; }
@@ -48,8 +44,8 @@
         .warning-icon { font-size: 20px; color: #b38630; }
         .warning-text strong { color: #f0b033; display: block; margin-bottom: 5px; }
         .warning-text p { font-size: 12px; color: #c7ced6; }
-        .kyc-buttons { display: flex; gap: 15px; }
-        .kyc-buttons button { flex: 1; padding: 12px; border-radius: 8px; border: none; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+        .kyc-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+        .kyc-buttons button, .kyc-buttons label { flex: 1; padding: 12px; border-radius: 8px; border: none; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-align: center; }
         .btn-qr { background-color: #2c3038; color: #e0e6ed; }
         .btn-camera { background-color: #e03030; color: #fff; }
         .kyc-section.verified .kyc-buttons { display: none; }
@@ -62,7 +58,6 @@
         .btn-submit:disabled { background-color: #555; cursor: not-allowed; }
         .red-bg { background-color: #e03030 !important; }
         
-        /* Camera Container */
         #camera-container { display: none; margin-top: 15px; text-align: center; }
         #video-element { width: 100%; max-width: 400px; border-radius: 8px; border: 2px solid #e03030; }
         #capture-btn { margin-top: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; }
@@ -73,7 +68,6 @@
             .header-titles { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
         
-        /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: #1e2128; padding: 30px; border-radius: 10px; text-align: center; border: 1px solid #2c3038; }
         .modal-content p { margin-bottom: 15px; color: #e0e6ed; }
@@ -158,7 +152,7 @@
                 <div class="checkbox-group">
                     <input type="checkbox" id="rules" required>
                     <label for="rules">
-                        لقد قرأت قوانين السيرفر بالكامل، وأوافق على إجراءات التحقق من الهوية (KYC)، وأتعهد بالالتزام بها وبقرارات الإدارة.
+                        لقد قرأت قوانين السيرفر بالكامل، وأوافق على إجراءات التحقق، وأتعهد بالالتزام بها وبقرارات الإدارة.
                     </label>
                 </div>
             </div>
@@ -168,13 +162,13 @@
                     <span class="lock-icon">🔒</span>
                     <h4>التحقق من الهوية (KYC)</h4>
                 </div>
-                <p class="kyc-note">خطوة إلزامية قبل إرسال الطلب - الحد الأدنى للعمر 18 سنة.</p>
+                <p class="kyc-note">خطوة إلزامية قبل إرسال الطلب.</p>
                 
                 <div class="kyc-warning">
                     <span class="warning-icon">⚠️</span>
                     <div class="warning-text">
                         <strong>لم يتم إكمال التحقق</strong>
-                        <p>يجب إكمال التحقق من الهوية قبل إرسال الطلب.</p>
+                        <p>استخدم الكاميرا أو ارفع صورة لإكمال التحقق.</p>
                     </div>
                 </div>
 
@@ -182,13 +176,15 @@
 
                 <div class="kyc-buttons">
                     <button type="button" class="btn-qr" id="start-qr-btn">
-                        <span class="qr-icon">📱</span>
-                        تنبيه بخصوص الديسكورد (QR)
+                        📱 تنبيه الديسكورد
                     </button>
                     <button type="button" class="btn-camera red-bg" id="start-camera-btn">
-                        <span class="camera-icon">📷</span>
-                        بدء التحقق بالكاميرا
+                        📷 كاميرا مباشرة
                     </button>
+                    <label for="upload-image-input" class="btn-camera" style="background-color: #28a745; margin:0;">
+                        📁 رفع صورة من الجهاز
+                    </label>
+                    <input type="file" id="upload-image-input" accept="image/*" style="display: none;">
                 </div>
 
                 <div id="camera-container">
@@ -207,16 +203,14 @@
 
     <div id="qr-modal" class="modal">
         <div class="modal-content">
-            <p>تنبيه: لتسجيل الدخول بأمان، يرجى إدخال الديسكورد الخاص بك في الحقل المخصص أعلاه (DISCORD TAG).<br> نحن لا نطلب تسجيل الدخول المباشر بالـ QR Code لحماية حسابك من الاختراق.</p>
+            <p>تنبيه: يجدر إدخال الديسكورد الخاص بك في الحقل المخصص في الاستمارة لتتمكن الإدارة من التواصل معك.</p>
             <button class="close-modal" id="close-qr-modal">حسناً، فهمت</button>
         </div>
     </div>
 
     <script>
-        // --- الرابط الصحيح الذي أرسلته تم إضافته هنا ---
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1534284622085492887/-HmQRssHqL4hm34IUSHAudk74OseFhM-eRmgG6WgWXa6nCgFEpuUftPBckBsgmFypZxr";
 
-        // --- المتغيرات وعناصر الصفحة ---
         const kycSection = document.getElementById('kyc-status-section');
         const submitBtn = document.getElementById('submit-btn');
         const startCameraBtn = document.getElementById('start-camera-btn');
@@ -226,24 +220,24 @@
         const startQrBtn = document.getElementById('start-qr-btn');
         const qrModal = document.getElementById('qr-modal');
         const closeQrModal = document.getElementById('close-qr-modal');
+        const uploadImageInput = document.getElementById('upload-image-input');
         
         let mediaStream = null;
         let isKycVerified = false;
 
-        // --- نظام فتح الكاميرا (التحقق من الوجه) ---
+        // تشغيل الكاميرا المباشرة
         startCameraBtn.addEventListener('click', async () => {
             try {
                 mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
                 videoElement.srcObject = mediaStream;
                 cameraContainer.style.display = 'block';
-                document.querySelector('.kyc-buttons').style.display = 'none';
             } catch (err) {
-                alert("لم نتمكن من الوصول للكاميرا. يرجى إعطاء الصلاحية للمتصفح.");
+                alert("تعذر فتح الكاميرا بسبب قيود المتصفح. يمكنك استخدام خيار 'رفع صورة من الجهاز' بكل سهولة!");
                 console.error("Camera Error:", err);
             }
         });
 
-        // --- التقاط الصورة وتأكيد KYC ---
+        // التقاط الصورة من الكاميرا
         captureBtn.addEventListener('click', () => {
             if (mediaStream) {
                 const tracks = mediaStream.getTracks();
@@ -255,21 +249,24 @@
             submitBtn.disabled = false;
         });
 
-        // --- نافذة الـ QR كود ---
-        startQrBtn.addEventListener('click', () => {
-            qrModal.style.display = 'flex';
+        // الخيار البديل: رفع صورة من الجهاز
+        uploadImageInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                kycSection.classList.add('verified');
+                isKycVerified = true;
+                submitBtn.disabled = false;
+            }
         });
 
-        closeQrModal.addEventListener('click', () => {
-            qrModal.style.display = 'none';
-        });
+        startQrBtn.addEventListener('click', () => { qrModal.style.display = 'flex'; });
+        closeQrModal.addEventListener('click', () => { qrModal.style.display = 'none'; });
 
-        // --- إرسال الاستمارة إلى ديسكورد سيرفر Lag City RP ---
+        // إرسال الطلب
         document.getElementById('application-form').addEventListener('submit', async (e) => {
             e.preventDefault(); 
 
             if (!isKycVerified) {
-                alert("يجب إكمال التحقق من الهوية (الكاميرا) أولاً!");
+                alert("يجب إكمال التحقق أولاً (باستخدام الكاميرا أو رفع صورة)!");
                 return;
             }
 
@@ -298,7 +295,7 @@
                             { name: "🎲 خبرة رول بلاي", value: rpExperience, inline: true },
                             { name: "📖 قصة الشخصية", value: charStory },
                             { name: "❓ لماذا يريد الانضمام؟", value: whyJoin },
-                            { name: "✅ حالة الـ KYC (الكاميرا)", value: "تم التحقق ✔️" }
+                            { name: "✅ حالة الـ KYC", value: "تم التحقق ✔️" }
                         ],
                         timestamp: new Date().toISOString()
                     }
@@ -319,12 +316,12 @@
                     alert("✅ تم إرسال طلبك بنجاح إلى إدارة Lag City RP!");
                     window.location.reload();
                 } else {
-                    alert("❌ حدث خطأ أثناء إرسال الطلب. تواصل مع الإدارة.");
+                    alert("❌ حدث خطأ أثناء إرسال الطلب.");
                     submitBtn.textContent = "إرسال الطلب إلى Lag City RP";
                     submitBtn.disabled = false;
                 }
             } catch (error) {
-                alert("❌ فشل الاتصال بالديسكورد. تأكد من اتصالك بالإنترنت.");
+                alert("❌ فشل الاتصال بالديسكورد.");
                 submitBtn.textContent = "إرسال الطلب إلى Lag City RP";
                 submitBtn.disabled = false;
             }
